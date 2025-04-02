@@ -2,12 +2,9 @@ PODS:
   - Flutter (1.0.0)
   - flutter_chrome_cast (0.0.2):
     - Flutter
-    - google-cast-sdk-no-bluetooth
+    - google-cast-sdk
     - Protobuf
-  - google-cast-sdk-no-bluetooth (4.7.0):
-    - google-cast-sdk-no-bluetooth/Core (= 4.7.0)
-    - Protobuf (~> 3.13)
-  - google-cast-sdk-no-bluetooth/Core (4.7.0):
+  - google-cast-sdk (4.8.3):
     - Protobuf (~> 3.13)
   - permission_handler_apple (9.3.0):
     - Flutter
@@ -20,7 +17,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - google-cast-sdk-no-bluetooth
+    - google-cast-sdk
     - Protobuf
 
 EXTERNAL SOURCES:
@@ -33,8 +30,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_chrome_cast: f88dacbc1a7931885bbe44de5b85b041761639bc
-  google-cast-sdk-no-bluetooth: 5313156110d6e71fa336f6d742f1ee641e91fdca
+  flutter_chrome_cast: eddd8b12aff9223a33e77f3a1a8bb503f8d8fb75
+  google-cast-sdk: 1fb6724e94cc5ff23b359176e0cf6360586bb97a
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   Protobuf: 2e6de032ba12b9efb390ae550d1a243a5b19ddfc
 
