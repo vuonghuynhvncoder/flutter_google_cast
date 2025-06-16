@@ -51,11 +51,15 @@ class CastBreak {
   }
 
   factory CastBreak.fromMap(Map<String, dynamic> map) {
+    dynamic duration = map['duration'];
+    if(duration != null && duration is num) {
+      duration =  Duration(seconds: duration.isFinite ? duration.round() : 0);
+    }else {
+      duration = null;
+    }
     return CastBreak(
       breakClipIds: List<String>.from(map['breakClipIds']),
-      duration: map['duration'] != null
-          ? Duration(seconds: map['duration'].round())
-          : null,
+      duration: duration,
       id: map['id'] ?? '',
       isEmbedded: map['isEmbedded'] ?? false,
       isWatched: map['isWatched'] ?? false,

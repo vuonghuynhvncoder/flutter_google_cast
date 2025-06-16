@@ -90,15 +90,19 @@ class CastBreakClips {
   }
 
   factory CastBreakClips.fromMap(Map<String, dynamic> map) {
+    dynamic duration = map['duration'];
+    if(duration != null && duration is num) {
+      duration =  Duration(seconds: duration.isFinite ? duration.round() : 0);
+    }else {
+      duration = null;
+    }
     return CastBreakClips(
       clickThroughUrl: map['clickThroughUrl'],
       contentId: map['contentId'],
       contentType: map['contentType'],
       contentUrl: map['contentUrl'],
       customData: Map<String, dynamic>.from(map['customData']),
-      duration: map['duration'] != null
-          ? Duration(seconds: map['duration'].round())
-          : null,
+      duration: duration,
       hlsSegmentFormat: map['hlsSegmentFormat'] != null
           ? CastHlsSegmentFormat.fromMap(map['hlsSegmentFormat'])
           : null,

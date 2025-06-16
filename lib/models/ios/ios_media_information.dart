@@ -29,6 +29,12 @@ class GoogleCastMediaInformationIOS extends GoogleCastMediaInformation {
   });
 
   factory GoogleCastMediaInformationIOS.fromMap(Map<String, dynamic> map) {
+    dynamic duration = map['duration'];
+    if(duration != null && duration is num) {
+      duration =  Duration(seconds: duration.isFinite ? duration.round() : 0);
+    }else {
+      duration = null;
+    }
     return GoogleCastMediaInformationIOS(
       atvEntity: map['atvEntity'],
       breakClips: map['breakClips'] != null
@@ -41,9 +47,7 @@ class GoogleCastMediaInformationIOS extends GoogleCastMediaInformation {
       metadata: map['metadata'] != null
           ? _getCastMediaMetadata(Map.from(map['metadata']))
           : null,
-      duration: map['duration'] != null
-          ? Duration(seconds: map['duration']?.round() ?? 0)
-          : null,
+      duration: duration,
       customData: Map<String, dynamic>.from(map['customData'] ?? {}),
       breaks: map['breaks'] != null
           ? List<CastBreak>.from(
