@@ -112,12 +112,13 @@ class DiscoveryManagerMethodChannel : FlutterPlugin, MethodChannel.MethodCallHan
         }
 
         private fun getCastDevice(routeInfo: MediaRouter.RouteInfo): Map<*, *>? {
-            val device = CastDevice.getFromBundle(routeInfo.extras)
+            val extras = routeInfo.extras
+            val device = CastDevice.getFromBundle(extras)
+            val endpoint = extras?.getString("com.google.android.gms.cast.EXTRA_ENDPOINT_DEVICE_ID")
+            if(!endpoint.isNullOrEmpty()) return null
             return device?.let {
                 device.toMap()
             }
-
-
         }
 
         fun getCastDevicesMap() {
