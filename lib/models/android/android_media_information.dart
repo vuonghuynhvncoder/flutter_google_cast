@@ -1,12 +1,8 @@
 import 'package:flutter_chrome_cast/lib.dart';
-import 'package:flutter_chrome_cast/models/android/metadata/generic.dart';
-import 'package:flutter_chrome_cast/models/android/metadata/movie.dart';
-import 'package:flutter_chrome_cast/models/android/metadata/music.dart';
-import 'package:flutter_chrome_cast/models/android/metadata/photo.dart';
-import 'package:flutter_chrome_cast/models/android/metadata/tv_show.dart';
-import 'extensions/stream_type.dart';
 
+/// Android-specific extension of [GoogleCastMediaInformation].
 class GoogleCastMediaInformationAndroid extends GoogleCastMediaInformation {
+  /// Creates a new [GoogleCastMediaInformationAndroid] instance.
   GoogleCastMediaInformationAndroid({
     required super.contentId,
     required super.streamType,
@@ -28,6 +24,7 @@ class GoogleCastMediaInformationAndroid extends GoogleCastMediaInformation {
     super.vmapAdsRequest,
   });
 
+  /// Creates a [GoogleCastMediaInformationAndroid] from a map.
   factory GoogleCastMediaInformationAndroid.fromMap(Map<String, dynamic> map) {
     dynamic duration = map['duration'];
     if(duration != null && duration is num) {

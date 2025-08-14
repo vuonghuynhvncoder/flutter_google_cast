@@ -1,11 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chrome_cast/entities/cast_device.dart';
 import 'package:flutter_chrome_cast/models/ios/ios_cast_device.dart';
 import 'package:rxdart/subjects.dart';
 import 'discovery_manager_platform_interface.dart';
 
+/// iOS-specific implementation of the Google Cast discovery manager.
+///
+/// This class handles the discovery of Google Cast devices on iOS platform
+/// using method channels to communicate with the native iOS implementation.
 class GoogleCastDiscoveryManagerMethodChannelIOS
     implements GoogleCastDiscoveryManagerPlatformInterface {
+  /// Creates a new instance of the iOS discovery manager.
+  ///
+  /// Sets up the method call handler to receive updates from the native side.
   GoogleCastDiscoveryManagerMethodChannelIOS() {
     _channel.setMethodCallHandler(_handleMethodCall);
   }
@@ -39,6 +47,22 @@ class GoogleCastDiscoveryManagerMethodChannelIOS
     return _channel.invokeMethod('stopDiscovery');
   }
 
+  /// Handles device changes for testing purposes.
+  /// This method is visible for testing and allows simulating device changes
+  /// in unit tests by calling the internal [_onDevicesChanged] method.
+  @visibleForTesting
+  void onDevicesChanged(List arguments) {
+    _onDevicesChanged(arguments);
+  }
+
+  /// Handles method calls from the platform channel for testing purposes.
+  /// This method is visible for testing and allows simulating platform
+  /// method calls in unit tests.
+  @visibleForTesting
+  Future<void> handleMethodCall(MethodCall call) {
+    return _handleMethodCall(call);
+  }
+
   void _onDevicesChanged(List arguments) {
     final devices = List.from(arguments)
         .map((device) => GoogleCastIosDevice.fromMap(Map.from(device)))
@@ -53,8 +77,9 @@ class GoogleCastDiscoveryManagerMethodChannelIOS
         _onDevicesChanged(call.arguments);
         break;
       default:
-        // ignore: avoid_print
-        print('No Handler for method ${call.method}');
+        if (kDebugMode) {
+          print('No Handler for method ${call.method}');
+        }
     }
   }
 }

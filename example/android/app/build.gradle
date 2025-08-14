@@ -23,7 +23,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    namespace = "com.felnanuke.google_cast_example"
+    compileSdk = 35
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -45,9 +46,14 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        // Exclude x86 architectures as they are deprecated
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a'
+        }
     }
 
     buildTypes {
@@ -57,7 +63,6 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-    namespace 'com.felnanuke.google_cast_example'
 }
 
 flutter {

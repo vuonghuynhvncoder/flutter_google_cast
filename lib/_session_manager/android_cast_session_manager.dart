@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:flutter_chrome_cast/enums/connection_satate.dart';
+import 'package:flutter_chrome_cast/enums/connection_state.dart';
 import 'package:flutter_chrome_cast/entities/cast_session.dart';
 import 'package:flutter_chrome_cast/entities/cast_device.dart';
 import 'package:flutter_chrome_cast/models/android/cast_device.dart';
@@ -8,8 +8,10 @@ import 'package:rxdart/subjects.dart';
 
 import 'cast_session_manager_platform.dart';
 
+/// Android-specific implementation of Google Cast session manager functionality.
 class GoogleCastSessionManagerAndroidMethodChannel
     implements GoogleCastSessionManagerPlatformInterface {
+  /// Creates a new Android session manager method channel.
   GoogleCastSessionManagerAndroidMethodChannel() {
     _channel.setMethodCallHandler(_onMethodCallHandler);
   }
@@ -22,7 +24,7 @@ class GoogleCastSessionManagerAndroidMethodChannel
   @override
   GoogleCastConnectState get connectionState =>
       _currentSessionStreamController.value?.connectionState ??
-      GoogleCastConnectState.ConnectionStateDisconnected;
+      GoogleCastConnectState.disconnected;
 
   @override
   GoogleCastSession? get currentSession =>
@@ -45,7 +47,7 @@ class GoogleCastSessionManagerAndroidMethodChannel
   @override
   bool get hasConnectedSession =>
       _currentSessionStreamController.value?.connectionState ==
-      GoogleCastConnectState.ConnectionStateConnected;
+      GoogleCastConnectState.connected;
 
   @override
   Future<void> setDefaultSessionOptions() {
@@ -75,8 +77,6 @@ class GoogleCastSessionManagerAndroidMethodChannel
   }
 
   Future _onMethodCallHandler(MethodCall call) async {
-    print('receive ${call.method}');
-
     switch (call.method) {
       case "onSessionChanged":
         _onSessionChanged(call.arguments);
@@ -85,7 +85,7 @@ class GoogleCastSessionManagerAndroidMethodChannel
     }
   }
 
-  void _onSessionChanged(arguments) {
+  void _onSessionChanged(dynamic arguments) {
     try {
       if (arguments == null) {
         _currentSessionStreamController.add(null);
@@ -94,11 +94,9 @@ class GoogleCastSessionManagerAndroidMethodChannel
       final map = Map<String, dynamic>.from(arguments);
       final session = GoogleCastSessionAndroid.fromMap(map);
       _currentSessionStreamController.add(session);
-    } catch (e, s) {
-      print(e);
-      print(s);
+    } catch (e) {
+      rethrow;
     }
-    print('onSessionChangedSuccess');
   }
 
   @override

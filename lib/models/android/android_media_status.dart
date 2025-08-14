@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_chrome_cast/lib.dart';
-import 'package:flutter_chrome_cast/models/android/android_media_information.dart';
-import 'package:flutter_chrome_cast/models/android/extensions/cast_media_player_state.dart';
-import 'package:flutter_chrome_cast/models/android/extensions/idle_reason.dart';
-import 'package:flutter_chrome_cast/models/android/extensions/repeat_mode.dart';
 
+/// Android-specific implementation of media status.
 class GoogleCastAndroidMediaStatus extends GoggleCastMediaStatus {
+  /// Creates an Android media status instance.
   GoogleCastAndroidMediaStatus({
     required super.mediaSessionID,
     required super.playerState,
@@ -21,6 +19,8 @@ class GoogleCastAndroidMediaStatus extends GoggleCastMediaStatus {
     super.liveSeekableRange,
     super.mediaInformation,
   });
+
+  /// Creates a media status instance from a map.
   factory GoogleCastAndroidMediaStatus.fromMap(Map<String, dynamic> map) {
     return GoogleCastAndroidMediaStatus(
       mediaSessionID: map['mediaSessionId']?.toInt() ?? 0,

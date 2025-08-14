@@ -1,8 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_chrome_cast/entities/cast_options.dart';
 
-import 'google_cast_context_plataform_interface.dart';
+import 'google_cast_context_platform_interface.dart';
 
+/// Android-specific implementation of Google Cast context functionality.
+///
+/// This class provides the Android platform implementation for initializing
+/// and managing the Google Cast context using method channels.
 class GoogleCastContextAndroidMethodChannel
     implements GoogleCastContextPlatformInterface {
   final _channel = const MethodChannel('com.felnanuke.google_cast.context');
@@ -13,11 +17,8 @@ class GoogleCastContextAndroidMethodChannel
     try {
       final result =
           await _channel.invokeMethod('setSharedInstance', castOptions.toMap());
-      print('setSharedInstanceWithOptions initialized with $result');
       return result == true;
-    } catch (e, s) {
-      print(e);
-      print(s);
+    } catch (e) {
       rethrow;
     }
   }

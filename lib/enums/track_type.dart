@@ -1,6 +1,14 @@
+/// Enum representing different types of media tracks.
 enum TrackType {
-  UNKNOWN,
-  TEXT,
-  AUDIO,
-  VIDEO,
+  /// Unknown track type.
+  unknown,
+
+  /// Text track (e.g., subtitles, captions).
+  text,
+
+  /// Audio track.
+  audio,
+
+  /// Video track.
+  video,
 }

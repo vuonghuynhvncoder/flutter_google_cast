@@ -1,12 +1,30 @@
 import 'package:flutter_chrome_cast/lib.dart';
 import 'package:flutter_chrome_cast/models/ios/ios_media_track.dart';
-import 'package:flutter_chrome_cast/models/ios/metadata/generic.dart';
-import 'package:flutter_chrome_cast/models/ios/metadata/metadata.dart';
-import 'package:flutter_chrome_cast/models/ios/metadata/movie.dart';
-import 'package:flutter_chrome_cast/models/ios/metadata/music.dart';
-import 'package:flutter_chrome_cast/models/ios/metadata/tv_show.dart';
 
+import 'metadata/generic.dart';
+import 'metadata/movie.dart';
+import 'metadata/music.dart';
+import 'metadata/photo.dart';
+import 'metadata/tv_show.dart';
+
+/// iOS-specific implementation of [GoogleCastMediaInformation].
+///
+/// This class represents the media information required to load and control media playback
+/// on Google Cast devices from iOS. It extends the cross-platform [GoogleCastMediaInformation]
+/// and provides a factory for constructing from a platform channel map.
+///
+/// Typical usage involves creating an instance with all required media details, or using
+/// [GoogleCastMediaInformationIOS.fromMap] to parse data received from the native iOS layer.
+///
+/// See also:
+/// - [GoogleCastMediaInformation] for the base class and common fields
+/// - [GoogleCastRemoteMediaClient] for loading and controlling media
+/// - [GoogleCastMediaTrack] for track details
+/// - [GoogleCastMediaMetadataType] for supported metadata types
 class GoogleCastMediaInformationIOS extends GoogleCastMediaInformation {
+  /// Creates a new [GoogleCastMediaInformationIOS] instance.
+  ///
+  /// All parameters are forwarded to the base [GoogleCastMediaInformation].
   GoogleCastMediaInformationIOS({
     required super.contentId,
     required super.streamType,
@@ -28,6 +46,9 @@ class GoogleCastMediaInformationIOS extends GoogleCastMediaInformation {
     super.vmapAdsRequest,
   });
 
+  /// Creates a [GoogleCastMediaInformationIOS] from a [Map] received from the platform channel.
+  ///
+  /// The [map] parameter must contain the expected keys and value types as sent from iOS.
   factory GoogleCastMediaInformationIOS.fromMap(Map<String, dynamic> map) {
     dynamic duration = map['duration'];
     if(duration != null && duration is num) {

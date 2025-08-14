@@ -1,20 +1,18 @@
-///optional If the playerState is IDLE and the reason it
-///became IDLE is known, this property is provided. If the
-/// player is IDLE because it just started, this property
-/// will not be provided; if the player is in any other
-/// state this property should not be provided.
-///  The following values apply:
-
+/// Represents the reason why media playback became idle.
+///
+/// This enum defines the different reasons why a Cast media session
+/// might transition to an idle state, indicating why playback stopped.
 enum GoogleCastMediaIdleReason {
+  /// No specific reason or unknown reason.
   none,
 
-  /// The media playback completed
+  /// The media playback completed naturally.
   finished,
 
-  /// A sender requested to stop playback using the STOP command
+  /// A sender requested to stop playback using the STOP command.
   cancelled,
 
-  /// INTERRUPTED  A sender requested playing a different media using the LOAD command
+  /// INTERRUPTED - A sender requested playing a different media using the LOAD command.
   interrupted,
 
   ///ERROR  The media was interrupted due to an error; for example, if the player could not download the media due to network issues

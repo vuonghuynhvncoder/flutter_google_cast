@@ -2,8 +2,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_chrome_cast/lib.dart';
 import 'package:rxdart/subjects.dart';
 
+/// iOS-specific implementation of Google Cast session manager functionality.
 class GoogleCastSessionManagerIOSMethodChannel
     implements GoogleCastSessionManagerPlatformInterface {
+  /// Creates a new iOS session manager method channel.
   GoogleCastSessionManagerIOSMethodChannel() {
     _channel.setMethodCallHandler(
       (call) => _methodCallHandler(call),
@@ -30,9 +32,12 @@ class GoogleCastSessionManagerIOSMethodChannel
 
   @override
   GoogleCastConnectState get connectionState =>
-      currentSession?.connectionState ??
-      GoogleCastConnectState.ConnectionStateDisconnected;
+      currentSession?.connectionState ?? GoogleCastConnectState.disconnected;
 
+  /// Returns the current cast session if available.
+  ///
+  /// This method is not implemented for iOS and will throw an [UnimplementedError].
+  /// Use [currentSession] instead which is properly implemented for iOS.
   GoogleCastSession? get currentCastSession => throw UnimplementedError();
 
   @override
@@ -51,7 +56,7 @@ class GoogleCastSessionManagerIOSMethodChannel
 
   @override
   bool get hasConnectedSession =>
-      connectionState == GoogleCastConnectState.ConnectionStateConnected;
+      connectionState == GoogleCastConnectState.connected;
 
   @override
   Future<void> setDefaultSessionOptions() {
@@ -78,14 +83,13 @@ class GoogleCastSessionManagerIOSMethodChannel
     }
   }
 
-  void _onCurrentSessionChanged(arguments) async {
+  void _onCurrentSessionChanged(dynamic arguments) async {
     try {
       final session = IOSGoogleCastSessions.fromMap(
           arguments == null ? null : Map<String, dynamic>.from(arguments));
       _currentSessionStreamController.add(session);
-    } catch (e, s) {
-      print(e);
-      print(s);
+    } catch (e) {
+      rethrow;
     }
   }
 

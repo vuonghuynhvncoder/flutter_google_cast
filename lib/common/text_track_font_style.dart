@@ -1,14 +1,34 @@
 ///Possible text track font style.
 enum TextTrackFontStyle {
-  NORMAL,
+  /// Normal font style.
+  normal,
 
-  BOLD,
+  /// Bold font style.
+  bold,
 
-  BOLD_ITALIC,
+  /// Bold italic font style.
+  boldItalic,
 
-  ITALIC;
+  /// Italic font style.
+  italic;
 
   factory TextTrackFontStyle.fromMap(String value) {
-    return values.firstWhere((element) => element.name == value);
+    // Try matching by name (lowerCamelCase)
+    for (final v in values) {
+      if (v.name == value) return v;
+    }
+    // Fallback: match legacy UPPER_SNAKE_CASE
+    switch (value) {
+      case 'NORMAL':
+        return TextTrackFontStyle.normal;
+      case 'BOLD':
+        return TextTrackFontStyle.bold;
+      case 'BOLD_ITALIC':
+        return TextTrackFontStyle.boldItalic;
+      case 'ITALIC':
+        return TextTrackFontStyle.italic;
+      default:
+        throw ArgumentError('Unknown TextTrackFontStyle: $value');
+    }
   }
 }
