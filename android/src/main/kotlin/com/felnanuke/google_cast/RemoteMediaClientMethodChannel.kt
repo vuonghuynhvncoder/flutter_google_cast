@@ -144,6 +144,7 @@ class RemoteMediaClientMethodChannel : FlutterPlugin, MethodChannel.MethodCallHa
      * - `setTextTrackStyle`: Configure subtitle appearance
      * - `play`: Start or resume media playback
      * - `pause`: Pause media playback
+     * - `stop`: Stop media playback
      * - And many more media control operations...
      *
      * @param call The method call from Flutter containing method name and arguments
@@ -223,6 +224,11 @@ class RemoteMediaClientMethodChannel : FlutterPlugin, MethodChannel.MethodCallHa
 
             "pause" -> {
                 pause()
+                result.success(true)
+            }
+
+            "stop" -> {
+                stop()
                 result.success(true)
             }
 
@@ -320,6 +326,11 @@ class RemoteMediaClientMethodChannel : FlutterPlugin, MethodChannel.MethodCallHa
 
     private fun play() {
         currentRemoteMediaClient?.play()
+
+    }
+
+    private fun stop() {
+        currentRemoteMediaClient?.stop()
 
     }
 
